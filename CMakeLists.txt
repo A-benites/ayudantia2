@@ -4,5 +4,8 @@ project(ayudantia1)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(ayudantia1 main.cpp
-        prueba.cpp
-        prueba.h)
+        model/Libro.cpp
+        include/model/Libro.h
+        service/Sistema.cpp
+        include/service/Sistema.h
+)
