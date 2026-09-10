@@ -4,11 +4,13 @@
 
 #include "../include/service/Sistema.h"
 
+#include <fstream>
 #include <iostream>
+#include <sstream>
+
 #include "../include/model/Libro.h"
 
-Sistema::Sistema() {
-    id_actual = 0;
+Sistema::Sistema(): libros(1) {
 }
 
 void Sistema::mostrarMenu() {
@@ -45,11 +47,7 @@ void Sistema::menu() {
                 break;
 
             default:
-                std::cout << "Opcion no valida";
-
-                mostrarMenu();
-                std::string opcion;
-                std::cin >> opcion;
+                std::cout << "Opcion no valida" << std::endl;
                 break;
         }
     }
@@ -73,15 +71,37 @@ void Sistema::crearLibro() {
 
     Libro libro = Libro(titulo, autor, fecha);
 
-    libros[id_actual] = libro;
-    id_actual++;
+    libros.agregar(libro);
 
 }
 
 void Sistema::mostrarLibro(int id) {
     std::cout<<"ID: "<<id<<std::endl;
-    std::cout<<"Titulo: "<<libros[id].getTitulo()<<std::endl;
-    std::cout<<"Autor: "<<libros[id].getAutor()<<std::endl;
-    std::cout<<"Fecha: "<<libros[id].getFecha()<<std::endl;
+    std::cout<<"Titulo: "<<libros.obtener(id).getTitulo()<<std::endl;
+    std::cout<<"Autor: "<<libros.obtener(id).getAutor()<<std::endl;
+    std::cout<<"Fecha: "<<libros.obtener(id).getFecha()<<std::endl;
 
+}
+
+void Sistema::leerArchivo(std::string nombreArchivo) {
+    std::fstream file(nombreArchivo);
+
+    if (!file.is_open()) {
+        std::cout << "Error al abrir el archivo" << std::endl;
+        exit(1);
+    }
+
+    std::string linea;
+    while (std::getline(file,linea)) {
+        std::stringstream ss(linea);
+        std::string titulo, autor, fecha;
+
+        std::getline(ss, titulo, ';');
+        std::getline(ss, autor, ';');
+        std::getline(ss, fecha, ';');
+
+        Libro libro = Libro(titulo, autor, fecha);
+        libros.agregar(libro);
+    }
+    file.close();
 }

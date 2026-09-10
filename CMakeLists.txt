@@ -8,4 +8,6 @@ add_executable(ayudantia1 main.cpp
         include/model/Libro.h
         service/Sistema.cpp
         include/service/Sistema.h
+        struct/ArregloDinamico.cpp
+        include/struct/ArregloDinamico.h
 )

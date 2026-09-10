@@ -5,12 +5,12 @@
 #ifndef AYUDANTIA1_SISTEMA_H
 #define AYUDANTIA1_SISTEMA_H
 
-#include "../model/libro.h"
+#include "../model/Libro.h"
+#include "../struct/ArregloDinamico.h"
 
 class Sistema {
 
-Libro libros[10];
-int id_actual;
+    ArregloDinamico libros;
 
 public:
     Sistema();
@@ -19,6 +19,8 @@ public:
     void menu();
     void crearLibro();
     void mostrarLibro(int id);
+    void leerArchivo(std::string nombreArchivo);
+
 };
 
 
